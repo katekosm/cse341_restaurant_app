@@ -1,49 +1,48 @@
 const mongodb = require("../db/connect");
 const ObjectId = require("mongodb").ObjectId;
 
-const getAll = (req, res) => {
-  mongodb
-    .getDb()
-    .db()
-    .collection("users")
-    .find()
-    .toArray((err, lists) => {
-      if (err) {
-        res.status(400).json({ message: err });
-      }
+const getAll = async (req, res, next) => {
+  try {
+    const result = await mongodb.getDb().db().collection("users").find();
+    result.toArray().then((lists) => {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(lists);
     });
+  } catch (error) {
+    res.status(500).json(error || "Some error occurred");
+  }
 };
 
-const getSingle = async (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must be a valid contact id");
-  }
-  const userId = new ObjectId(req.params.id);
-  mongodb
-    .getDb()
-    .db()
-    .collection("users")
-    .find({ _id: userId })
-    .toArray((err, lists) => {
-      if (err) {
-        res.status(400).json({ message: err });
-      }
+const getSingle = async (req, res, next) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).json("Must be a valid contact id");
+    }
+    const userId = new ObjectId(req.params.id);
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("users")
+      .find({ _id: userId });
+    result.toArray().then((lists) => {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(lists[0]);
     });
+  } catch (error) {
+    res.status(500).json(error || "Some error occurred");
+  }
 };
 
 const createUser = async (req, res, next) => {
   const user = {
-    customerId: req.body.customerId,
-    userDate: req.body.userDate,
-    totalPrice: req.body.totalPrice,
-    paymentMethod: req.body.paymentMethod,
-    paymentStatus: req.body.paymentStatus,
-    shippingAddress: req.body.shippingAddress,
-    shippingStatus: req.body.shippingStatus,
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    category: req.body.category,
+    manufacturer: req.body.manufacturer,
+    inStock: req.body.inStock,
+    brand: req.body.brand,
+    color: req.body.color,
   };
   const response = await mongodb
     .getDb()
@@ -55,24 +54,24 @@ const createUser = async (req, res, next) => {
   } else {
     res
       .status(500)
-      .json(response.error || "Some error occurred while creating the user.");
+      .json(
+        response.error || "Some error occurred while creating the user."
+      );
   }
 };
 
 const updateUser = async (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json('Must be a valid destroyUser id');
-  }
   const userId = new ObjectId(req.params.id);
   // be aware of updateOne if you only want to update specific fields
   const user = {
-    customerId: req.body.customerId,
-    userDate: req.body.userDate,
-    totalPrice: req.body.totalPrice,
-    paymentMethod: req.body.paymentMethod,
-    paymentStatus: req.body.paymentStatus,
-    shippingAddress: req.body.shippingAddress,
-    shippingStatus: req.body.shippingStatus,
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    category: req.body.category,
+    manufacturer: req.body.manufacturer,
+    inStock: req.body.inStock,
+    brand: req.body.brand,
+    color: req.body.color,
   };
   const response = await mongodb
     .getDb()
@@ -85,13 +84,15 @@ const updateUser = async (req, res) => {
   } else {
     res
       .status(500)
-      .json(response.error || "Some error occurred while updating the user.");
+      .json(
+        response.error || "Some error occurred while updating the user."
+      );
   }
 };
 
 const deleteUser = async (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json('Must be a valid user id to delete it');
+    res.status(400).json("Must be a valid contact id");
   }
   const userId = new ObjectId(req.params.id);
   const response = await mongodb
@@ -101,12 +102,20 @@ const deleteUser = async (req, res) => {
     .deleteOne({ _id: userId }, true);
   console.log(response);
   if (response.deletedCount > 0) {
-    res.status(204).send();
+    res.status(200).send();
   } else {
     res
       .status(500)
-      .json(response.error || "Some error occurred while deleting the user.");
+      .json(
+        response.error || "Some error occurred while deleting the user."
+      );
   }
 };
 
-module.exports = { getAll, getSingle, createUser, updateUser, deleteUser };
+module.exports = {
+  getAll,
+  getSingle,
+  createUser,
+  updateUser,
+  deleteUser,
+};

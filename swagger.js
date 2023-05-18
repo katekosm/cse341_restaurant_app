@@ -5,8 +5,8 @@ const doc = {
     title: 'My Shopping Cart',
     description: 'REST API Shopping Cart',
   },
-  host: 'enh-byui-cse341-lesson8.onrender.com',
-  schemes: ['https']
+  host: 'localhost:8080',
+  schemes: ['http']
 };
 
 const outputFile = './swagger.json';
