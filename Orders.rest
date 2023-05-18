@@ -1,0 +1,81 @@
+//Localhost
+
+### Get all orders
+GET http://localhost:8080/orders HTTP/1.1
+
+### Create new order
+POST http://localhost:8080/orders HTTP/1.1
+content-type: application/json
+
+  {
+    "customerId": "10",
+    "orderDate": "2022-10-10",
+    "totalPrice": "100",
+    "paymentMethod": "Paypal",
+    "paymentStatus": "Completed",
+    "shippingAddress": "Mont 10, Small City, Big Country",
+    "shippingStatus": "Sent"
+  }
+
+### Show order
+GET http://localhost:8080/orders/644cb1a2504ae2d48cd4e25c HTTP/1.1
+
+### Update order
+PUT http://localhost:8080/orders/644cb1a2504ae2d48cd4e25c HTTP/1.1
+content-type: application/json
+
+  {
+    "customerId": "10",
+    "orderDate": "2022-10-10",
+    "totalPrice": "100",
+    "paymentMethod": "Paypal",
+    "paymentStatus": "Completed",
+    "shippingAddress": "Mont 10, Small City, Big Country",
+    "shippingStatus": "Sent"
+  }
+
+### Delete order
+DELETE  http://localhost:8080/orders/644cb1a2504ae2d48cd4e25c HTTP/1.1
+
+
+
+//Render host
+
+@renderHost = https://enh-byui-cse341-lesson5.onrender.com
+
+### Get all orders
+GET {{renderHost}}/orders HTTP/1.1
+
+### Create new order
+POST {{renderHost}}/orders HTTP/1.1
+content-type: application/json
+
+  {
+    "customerId": "11",
+    "orderDate": "2022-11-10",
+    "totalPrice": "150",
+    "paymentMethod": "Visa",
+    "paymentStatus": "Completed",
+    "shippingAddress": "Mont 12, Small City, Big Country",
+    "shippingStatus": "Not Sent"
+  }
+
+### Show order
+GET {{renderHost}}/orders/645343206697fab4a4594eb4 HTTP/1.1
+
+### Update order
+PUT {{renderHost}}/orders/645343206697fab4a4594eb4 HTTP/1.1
+content-type: application/json
+
+  {
+    "customerId": "11",
+    "orderDate": "2022-11-10",
+    "totalPrice": "150",
+    "paymentMethod": "Visa",
+    "paymentStatus": "Completed",
+    "shippingAddress": "Mont 12, Small City, Big Country",
+    "shippingStatus": "Returned"
+  }
+
+### Delete order
+DELETE  {{renderHost}}/orders/645343776697fab4a4594eb5 HTTP/1.1

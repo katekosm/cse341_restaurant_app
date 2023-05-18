@@ -1,0 +1,85 @@
+//Localhost
+
+### Get all products
+GET http://localhost:8080/products HTTP/1.1
+
+### Create new product
+POST http://localhost:8080/products HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "iPhone 14 Pro",
+    "description": "New iPhone 14 Pro",
+    "price": "1400",
+    "category": "Electronics",
+    "manufacturer": "Apple",
+    "inStock": "true",
+    "brand": "Apple",
+    "color": "Red"
+  }
+
+### Show product
+GET http://localhost:8080/products/644cb1a2504ae2d48cd4e25c HTTP/1.1
+
+### Update product
+PUT http://localhost:8080/products/644cb1a2504ae2d48cd4e25c HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "iPhone 14 Pro",
+    "description": "New iPhone 14 Pro",
+    "price": "1400",
+    "category": "Electronics",
+    "manufacturer": "Apple",
+    "inStock": "true",
+    "brand": "Apple",
+    "color": "Red"
+  }
+
+### Delete product
+DELETE  http://localhost:8080/products/644cb1a2504ae2d48cd4e25c HTTP/1.1
+
+
+
+//Render host
+
+@renderHost = https://enh-byui-cse341-lesson5.onrender.com
+
+### Get all products
+GET {{renderHost}}/products HTTP/1.1
+
+### Create new product
+POST {{renderHost}}/products HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "iPhone 14 Pro",
+    "description": "New iPhone 14 Pro",
+    "price": "1400",
+    "category": "Electronics",
+    "manufacturer": "Apple",
+    "inStock": "true",
+    "brand": "Apple",
+    "color": "Red"
+  }
+
+### Show product
+GET {{renderHost}}/products/645346de6697fab4a4594eb9 HTTP/1.1
+
+### Update product
+PUT {{renderHost}}/products/645346de6697fab4a4594eb9 HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "iPhone 14 Pro",
+    "description": "New iPhone 14 Pro",
+    "price": "1400",
+    "category": "Electronics",
+    "manufacturer": "Apple",
+    "inStock": "true",
+    "brand": "Apple",
+    "color": "Black"
+  }
+
+### Delete product
+DELETE  {{renderHost}}/products/645346de6697fab4a4594eb9 HTTP/1.1
