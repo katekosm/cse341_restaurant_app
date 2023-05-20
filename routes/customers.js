@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { isAuthenticated } = require("../middleware/authenticate");
 
 const customersController = require('../controllers/customers');
 const validation = require('../middleware/validate');
@@ -11,19 +12,12 @@ router.get('/', customersController.getAll
 */
 );
 
-router.get('/:id', customersController.getSingle
+router.get('/my-account', isAuthenticated, customersController.getMyAccount
 /* 
 #swagger.tags = ['Customers']
-#swagger.summary = 'Shows one customer'
+#swagger.summary = 'Gets Account of Currently Logged User'
 */
-);
-
-router.post('/', validation.saveCustomer, customersController.createCustomer
-/* 
-#swagger.tags = ['Customers']
-#swagger.summary = 'Creates a new customer'
-*/
-);
+)
 
 router.put('/:id', validation.saveCustomer, customersController.updateCustomer
 /* 
