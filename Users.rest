@@ -1,0 +1,83 @@
+//Localhost
+@host = http://localhost:8080/users
+@userId = 64681039ef5645f163ca0d4c
+
+### Get all users
+GET {{host}} HTTP/1.1
+
+### Create new user
+POST {{host}} HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "Petr1",
+    "lastName": "Petrov",
+    "nickname": "petr_the_first",
+    "email": "petr@thefirst.ru",
+    "yearsOfWorking": "100",
+    "gender": "1",
+    "userType": "1"
+  }
+
+### Show user
+GET {{host}}/{{userId}} HTTP/1.1
+
+### Update user
+PUT {{host}}/{{userId}} HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "Petr2",
+    "lastName": "Petrov",
+    "nickname": "petr_the_first",
+    "email": "petr@thefirst.ru",
+    "yearsOfWorking": "100",
+    "gender": "1",
+    "userType": "1"
+  }
+
+### Delete user
+DELETE  {{host}}/{{userId}} HTTP/1.1
+
+
+
+//Render host
+
+@renderHost = https://enh-byui-cse341-lesson5.onrender.com
+
+### Get all users
+GET {{renderHost}}/users HTTP/1.1
+
+### Create new user
+POST {{renderHost}}/users HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "Petr3",
+    "lastName": "Petrov",
+    "nickname": "petr_the_first",
+    "email": "petr@thefirst.ru",
+    "yearsOfWorking": "100",
+    "gender": "1",
+    "userType": "1"
+  }
+
+### Show user
+GET {{renderHost}}/users/645346de6697fab4a4594eb9 HTTP/1.1
+
+### Update user
+PUT {{renderHost}}/users/645346de6697fab4a4594eb9 HTTP/1.1
+content-type: application/json
+
+  {
+    "name": "Petr4",
+    "lastName": "Petrov",
+    "nickname": "petr_the_first",
+    "email": "petr@thefirst.ru",
+    "yearsOfWorking": "100",
+    "gender": "1",
+    "userType": "1"
+  }
+
+### Delete user
+DELETE  {{renderHost}}/users/645346de6697fab4a4594eb9 HTTP/1.1

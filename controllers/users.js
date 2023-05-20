@@ -16,7 +16,7 @@ const getAll = async (req, res, next) => {
 const getSingle = async (req, res, next) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
-      res.status(400).json("Must be a valid contact id");
+      res.status(400).json("Must be a valid user id");
     }
     const userId = new ObjectId(req.params.id);
     const result = await mongodb
@@ -36,13 +36,12 @@ const getSingle = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   const user = {
     name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+    lastName: req.body.lastName,
+    nickname: req.body.nickname,
+    email: req.body.email,
+    yearsOfWorking: req.body.yearsOfWorking,
+    gender: req.body.gender,
+    userType: req.body.userType
   };
   const response = await mongodb
     .getDb()
@@ -65,20 +64,19 @@ const updateUser = async (req, res) => {
   // be aware of updateOne if you only want to update specific fields
   const user = {
     name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+    lastName: req.body.lastName,
+    nickname: req.body.nickname,
+    email: req.body.email,
+    yearsOfWorking: req.body.yearsOfWorking,
+    gender: req.body.gender,
+    userType: req.body.userType
   };
   const response = await mongodb
     .getDb()
     .db()
     .collection("users")
     .replaceOne({ _id: userId }, user);
-  console.log(response);
+
   if (response.modifiedCount > 0) {
     res.status(204).send();
   } else {
@@ -92,7 +90,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must be a valid contact id");
+    res.status(400).json("Must be a valid id");
   }
   const userId = new ObjectId(req.params.id);
   const response = await mongodb
@@ -100,7 +98,7 @@ const deleteUser = async (req, res) => {
     .db()
     .collection("users")
     .deleteOne({ _id: userId }, true);
-  console.log(response);
+
   if (response.deletedCount > 0) {
     res.status(200).send();
   } else {

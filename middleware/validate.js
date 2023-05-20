@@ -51,13 +51,13 @@ const saveOrder = async (req, res, next) => {
 
 const saveUser = async (req, res, next) => {
   const validationRule = {
-    customerId: "required|numeric",
-    orderDate: "required|date",
-    totalPrice: "required|numeric",
-    paymentMethod: "required|string",
-    paymentStatus: "required|string",
-    shippingAddress: "required|string",
-    shippingStatus: "required|string",
+    name: "required|string",
+    lastName: "required|string",
+    nickname: "required|string",
+    email: "required|email",
+    yearsOfWorking: "required|numeric",
+    gender: "required|numeric",
+    userType: "required|numeric"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
