@@ -11,6 +11,28 @@
     "http"
   ],
   "paths": {
+    "/login": {
+      "get": {
+        "tags": [
+          "Login, Logout Process"
+        ],
+        "summary": "Logs Customers Into their Acounts",
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": [
+          "Login, Logout Process"
+        ],
+        "summary": "Logs Customers Out of their Acounts",
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/menus/": {
       "get": {
         "tags": [
@@ -597,54 +619,25 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "post": {
+      }
+    },
+    "/customers/my-account": {
+      "get": {
         "tags": [
           "Customers"
         ],
-        "summary": "Creates a new customer",
+        "summary": "Gets Account of Currently Logged User",
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "manufacturer": {
-                  "example": "any"
-                },
-                "inStock": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "color": {
-                  "example": "any"
-                }
-              }
-            }
-          }
+        "produces": [
+          "application/json"
         ],
+        "parameters": [],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
-          "412": {
-            "description": "Precondition Failed"
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -653,35 +646,6 @@
       }
     },
     "/customers/{id}": {
-      "get": {
-        "tags": [
-          "Customers"
-        ],
-        "summary": "Shows one customer",
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
       "put": {
         "tags": [
           "Customers"

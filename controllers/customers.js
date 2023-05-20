@@ -33,24 +33,43 @@ const getSingle = async (req, res, next) => {
   }
 };
 
+const getMyAccount = async (req, res, next) => {
+  try {
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("customers")
+      .find({ googleId: req.session.user.id });
+
+    result.toArray().then((customers) => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(customers[0]); // Returning the logged in user's info.
+    });
+  } catch (error) {
+    res.status(500).json(error || "Some error occurred");
+  }
+};
+
 const createCustomer = async (req, res, next) => {
-  const customer = {
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+  const user = {
+    userName: req.user.displayName,
+    googleId: req.user.id,
+    email: req.user.email,
   };
+
   const response = await mongodb
     .getDb()
     .db()
     .collection("customers")
-    .insertOne(customer);
+    .updateOne(
+      { googleId: user.googleId },
+      { $setOnInsert: user},
+      { upsert: true }
+    );
+
   if (response.acknowledged) {
-    res.status(201).json(response);
+    req.session.user = req.user;
+    res.status(201).redirect("../../logged-status");
   } else {
     res
       .status(500)
@@ -115,6 +134,7 @@ const deleteCustomer = async (req, res) => {
 module.exports = {
   getAll,
   getSingle,
+  getMyAccount,
   createCustomer,
   updateCustomer,
   deleteCustomer,
