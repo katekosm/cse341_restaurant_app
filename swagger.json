@@ -5,10 +5,10 @@
     "description": "REST API Shopping Cart",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "restaurant-app-m6dg.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/login": {
