@@ -75,13 +75,28 @@ const saveUser = async (req, res, next) => {
 
 const saveCustomer = async (req, res, next) => {
   const validationRule = {
-    customerId: "required|numeric",
-    orderDate: "required|date",
-    totalPrice: "required|numeric",
-    paymentMethod: "required|string",
-    paymentStatus: "required|string",
-    shippingAddress: "required|string",
-    shippingStatus: "required|string",
+    userName: "required|string",
+    googleId: "required|string",
+    email: "required|string"
+  };
+
+  validator(req.body, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: "Validation failed",
+        data: err,
+      });
+    } else {
+      next();
+    }
+  });
+};
+
+const updateCustomer = async (req, res, next) => {
+  const validationRule = {
+    userName: "required|string",
+    email: "required|string"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
@@ -101,5 +116,6 @@ module.exports = {
   saveMenu,
   saveOrder,
   saveCustomer,
+  updateCustomer,
   saveUser
 };
