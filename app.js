@@ -9,7 +9,7 @@ const app = express();
 const session = require('express-session');
 const passport = require("passport");
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-const customer = require("./controllers/customers");
+const customer = require("./controllers/my-account");
 
 app
   .use(bodyParser.json())

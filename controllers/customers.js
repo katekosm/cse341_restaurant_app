@@ -33,28 +33,14 @@ const getSingle = async (req, res, next) => {
   }
 };
 
-const getMyAccount = async (req, res, next) => {
-  try {
-    const result = await mongodb
-      .getDb()
-      .db()
-      .collection("customers")
-      .find({ googleId: req.session.user.id });
-
-    result.toArray().then((customers) => {
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).json(customers[0]); // Returning the logged in user's info.
-    });
-  } catch (error) {
-    res.status(500).json(error || "Some error occurred");
-  }
-};
-
-const createCustomer = async (req, res, next) => {
-  const user = {
-    userName: req.user.displayName,
-    googleId: req.user.id,
-    email: req.user.email,
+const createDummyCustomer = async (req, res, next) => {
+  // There's a similar function in 'my-account' controller. This one
+  // allows admins create dummy customer records
+  // Creates a new record unless there's already one with the same googleId
+  const customer = {
+    userName: req.body.userName,
+    googleId: req.body.googleId,
+    email: req.body.email,
   };
 
   const response = await mongodb
@@ -62,14 +48,13 @@ const createCustomer = async (req, res, next) => {
     .db()
     .collection("customers")
     .updateOne(
-      { googleId: user.googleId },
-      { $setOnInsert: user},
+      { googleId: customer.googleId },
+      { $setOnInsert: customer},
       { upsert: true }
     );
 
   if (response.acknowledged) {
-    req.session.user = req.user;
-    res.status(201).redirect("../../logged-status");
+    res.status(201).json(response);
   } else {
     res
       .status(500)
@@ -83,14 +68,8 @@ const updateCustomer = async (req, res) => {
   const userId = new ObjectId(req.params.id);
   // be aware of updateOne if you only want to update specific fields
   const customer = {
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+    email: req.body.email,
+    userName: req.body.userName,
   };
   const response = await mongodb
     .getDb()
@@ -118,9 +97,9 @@ const deleteCustomer = async (req, res) => {
     .getDb()
     .db()
     .collection("customers")
-    .deleteOne({ _id: customerId }, true);
-  console.log(response);
-  if (response.deletedCount > 0) {
+    .findOneAndDelete({ _id: customerId });
+  
+  if (response) {
     res.status(200).send();
   } else {
     res
@@ -134,8 +113,7 @@ const deleteCustomer = async (req, res) => {
 module.exports = {
   getAll,
   getSingle,
-  getMyAccount,
-  createCustomer,
+  createDummyCustomer,
   updateCustomer,
   deleteCustomer,
 };

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { isAuthenticated } = require("../middleware/authenticate");
 
 const customersController = require('../controllers/customers');
 const validation = require('../middleware/validate');
@@ -12,14 +11,21 @@ router.get('/', customersController.getAll
 */
 );
 
-router.get('/my-account', isAuthenticated, customersController.getMyAccount
+router.get('/:id', customersController.getSingle
 /* 
 #swagger.tags = ['Customers']
-#swagger.summary = 'Gets Account of Currently Logged User'
+#swagger.summary = 'Lists one customer'
 */
-)
+);
 
-router.put('/:id', validation.saveCustomer, customersController.updateCustomer
+router.post('/', validation.saveCustomer, customersController.createDummyCustomer
+/* 
+#swagger.tags = ['Customers']
+#swagger.summary = 'Creates a new customer, unless an user with the same Google ID already exists'
+*/
+);
+
+router.put('/:id', validation.updateCustomer, customersController.updateCustomer
 /* 
 #swagger.tags = ['Customers']
 #swagger.summary = 'Updates one customer'

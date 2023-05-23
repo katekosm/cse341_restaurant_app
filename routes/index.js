@@ -13,6 +13,7 @@ router.use('/menus', require('./menus'));
 router.use('/orders', require('./orders'));
 router.use('/users', require('./users'));
 router.use('/customers', require('./customers'));
+router.use('/my-account', require('./my-account'));
 
 // Passport login and logout
 router.get('/login', passport.authenticate('google', { scope:
@@ -33,7 +34,5 @@ router.get('/logout', function(req, res, next) {
 #swagger.summary = 'Logs Customers Out of their Acounts'
 */
 );
-
-module.exports = router;
 
 module.exports = router;

@@ -446,25 +446,22 @@
                 "name": {
                   "example": "any"
                 },
-                "description": {
+                "lastName": {
                   "example": "any"
                 },
-                "price": {
+                "nickname": {
                   "example": "any"
                 },
-                "category": {
+                "email": {
                   "example": "any"
                 },
-                "manufacturer": {
+                "yearsOfWorking": {
                   "example": "any"
                 },
-                "inStock": {
+                "gender": {
                   "example": "any"
                 },
-                "brand": {
-                  "example": "any"
-                },
-                "color": {
+                "userType": {
                   "example": "any"
                 }
               }
@@ -536,25 +533,22 @@
                 "name": {
                   "example": "any"
                 },
-                "description": {
+                "lastName": {
                   "example": "any"
                 },
-                "price": {
+                "nickname": {
                   "example": "any"
                 },
-                "category": {
+                "email": {
                   "example": "any"
                 },
-                "manufacturer": {
+                "yearsOfWorking": {
                   "example": "any"
                 },
-                "inStock": {
+                "gender": {
                   "example": "any"
                 },
-                "brand": {
-                  "example": "any"
-                },
-                "color": {
+                "userType": {
                   "example": "any"
                 }
               }
@@ -619,25 +613,39 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/customers/my-account": {
-      "get": {
+      },
+      "post": {
         "tags": [
           "Customers"
         ],
-        "summary": "Gets Account of Currently Logged User",
+        "summary": "Creates a new customer, unless an user with the same Google ID already exists",
         "description": "",
-        "produces": [
-          "application/json"
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "example": "any"
+                },
+                "googleId": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
         ],
-        "parameters": [],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           },
-          "401": {
-            "description": "Unauthorized"
+          "412": {
+            "description": "Precondition Failed"
           },
           "500": {
             "description": "Internal Server Error"
@@ -646,6 +654,35 @@
       }
     },
     "/customers/{id}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Lists one customer",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "put": {
         "tags": [
           "Customers"
@@ -665,28 +702,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "email": {
                   "example": "any"
                 },
-                "description": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "manufacturer": {
-                  "example": "any"
-                },
-                "inStock": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "color": {
+                "userName": {
                   "example": "any"
                 }
               }
@@ -725,6 +744,87 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/my-account/": {
+      "get": {
+        "tags": [
+          "My Account"
+        ],
+        "summary": "Gets Account of Currently Logged User",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "My Account"
+        ],
+        "summary": "Updates Account of Currently Logged User",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "My Account"
+        ],
+        "summary": "Deletes Account of Currently Logged User",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
