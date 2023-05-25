@@ -5,10 +5,10 @@
     "description": "REST API Shopping Cart",
     "version": "1.0.0"
   },
-  "host": "restaurant-app-m6dg.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/login": {
@@ -343,28 +343,25 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "customerId": {
                   "example": "any"
                 },
-                "description": {
+                "orderDate": {
                   "example": "any"
                 },
-                "price": {
+                "totalPrice": {
                   "example": "any"
                 },
-                "category": {
+                "paymentMethod": {
                   "example": "any"
                 },
-                "manufacturer": {
+                "paymentStatus": {
                   "example": "any"
                 },
-                "inStock": {
+                "shippingAddress": {
                   "example": "any"
                 },
-                "brand": {
-                  "example": "any"
-                },
-                "color": {
+                "shippingStatus": {
                   "example": "any"
                 }
               }
