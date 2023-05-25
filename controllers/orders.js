@@ -41,7 +41,7 @@ const createOrder = async (req, res, next) => {
     paymentMethod: req.body.paymentMethod,
     paymentStatus: req.body.paymentStatus,
     shippingAddress: req.body.shippingAddress,
-    shippingStatus: req.body.shippingStatus,
+    shippingStatus: req.body.shippingStatus
   };
   const response = await mongodb
     .getDb()
@@ -63,15 +63,15 @@ const updateOrder = async (req, res) => {
   const userId = new ObjectId(req.params.id);
   // be aware of updateOne if you only want to update specific fields
   const order = {
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+    customerId: req.body.customerId,
+    orderDate: req.body.orderDate,
+    totalPrice: req.body.totalPrice,
+    paymentMethod: req.body.paymentMethod,
+    paymentStatus: req.body.paymentStatus,
+    shippingAddress: req.body.shippingAddress,
+    shippingStatus: req.body.shippingStatus
   };
+
   const response = await mongodb
     .getDb()
     .db()

@@ -4,9 +4,13 @@
   "description": "CSE341 projects repository",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch --coverage --detectOpenHandles",
     "start": "nodemon app.js",
     "swagger": "node ./swagger.js"
+  },
+  "jest": {
+    "verbose": true,
+    "preset": "@shelf/jest-mongodb"
   },
   "repository": {
     "type": "git",
@@ -31,7 +35,10 @@
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.7",
+    "jest": "^29.5.0",
     "nodemon": "^2.0.22",
+    "supertest": "^6.3.3",
     "swagger-autogen": "^2.23.1"
   }
 }
