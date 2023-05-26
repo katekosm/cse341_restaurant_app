@@ -3,6 +3,7 @@ const router = express.Router();
 
 const usersController = require('../controllers/users');
 const validation = require('../middleware/validate');
+const { isAuthenticated } = require("../middleware/authenticate");
 
 router.get('/', usersController.getAll
 /* 
@@ -18,21 +19,21 @@ router.get('/:id', usersController.getSingle
 */
 );
 
-router.post('/', validation.saveUser, usersController.createUser
+router.post('/', isAuthenticated, validation.saveUser, usersController.createUser
 /* 
 #swagger.tags = ['Users']
 #swagger.summary = 'Creates a new user'
 */
 );
 
-router.put('/:id', validation.saveUser, usersController.updateUser
+router.put('/:id', isAuthenticated, validation.saveUser, usersController.updateUser
 /* 
 #swagger.tags = ['Users']
 #swagger.summary = 'Updates one user'
 */
 );
 
-router.delete('/:id', usersController.deleteUser
+router.delete('/:id', isAuthenticated, usersController.deleteUser
 /* 
 #swagger.tags = ['Users']
 #swagger.summary = 'Deletes one user'
