@@ -189,7 +189,7 @@ describe("Order collection tests", () => {
       paymentMethod: "Cash",
       paymentStatus: "Completed",
       shippingAddress: "Anywhere 23, Some place, Some city",
-      shippingStatus: "Sent"
+      shippingStatus: "Sent",
     };
 
     const createdOrder = await orders.insertOne(mockOrder);
@@ -206,13 +206,13 @@ describe("Order collection tests", () => {
 
   test("Updates order", async () => {
     const updateOrder = {
-        customerId: 123452,
-        orderDate: Date.now(),
-        totalPrice: 12122,
-        paymentMethod: "Credit Card",
-        paymentStatus: "Waiting for approval",
-        shippingAddress: "Anywhere 33, Some place, Some city",
-        shippingStatus: "Waiting for payment"
+      customerId: 123452,
+      orderDate: Date.now(),
+      totalPrice: 12122,
+      paymentMethod: "Credit Card",
+      paymentStatus: "Waiting for approval",
+      shippingAddress: "Anywhere 33, Some place, Some city",
+      shippingStatus: "Waiting for payment",
     };
     const orders = db.collection("orders");
     //console.log(createdOrder.insertedId);
@@ -232,76 +232,72 @@ describe("Order collection tests", () => {
 
 //Menu collection
 describe("Menu collection tests", () => {
-    let connection;
-    let db;
-    let docId;
-    let mockMenu;
-  
-    beforeAll(async () => {
-      connection = await MongoClient.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      db = await connection.db("cse341_restaurant_app");
+  let connection;
+  let db;
+  let docId;
+  let mockMenu;
+
+  beforeAll(async () => {
+    connection = await MongoClient.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-  
-    afterAll(async () => {
-      await connection.close();
-    });
-  
-    test("responds to /menus", async () => {
-      const res = await request.get("/menus");
-      expect(res.header["content-type"]).toBe("application/json; charset=utf-8");
-      expect(res.statusCode).toBe(200);
-    });
-  
-    test("Creates a new menu", async () => {
-      const menus = db.collection("menu");
-  
-      mockMenu = {
-        customerId: 123451,
-        menuDate: Date.now(),
-        totalPrice: 12123,
-        paymentMethod: "Cash",
-        paymentStatus: "Completed",
-        shippingAddress: "Anywhere 23, Some place, Some city",
-        shippingStatus: "Sent"
-      };
-  
-      const createdMenu = await menus.insertOne(mockMenu);
-      docId = createdMenu.insertedId;
-    });
-  
-    test("Finds menu", async () => {
-      const menus = db.collection("menu");
-      //console.log(createdMenu.insertedId);
-  
-      const insertedMenu = await menus.findOne({ _id: docId });
-      expect(insertedMenu).toEqual(mockMenu);
-    });
-  
-    test("Updates menu", async () => {
-      const updateMenu = {
-          customerId: 123452,
-          menuDate: Date.now(),
-          totalPrice: 12122,
-          paymentMethod: "Credit Card",
-          paymentStatus: "Waiting for approval",
-          shippingAddress: "Anywhere 33, Some place, Some city",
-          shippingStatus: "Waiting for payment"
-      };
-      const menus = db.collection("menu");
-      //console.log(createdMenu.insertedId);
-  
-      const updatedMenu = await menus.replaceOne({ _id: docId }, updateMenu);
-      expect(updatedMenu.acknowledged).toEqual(true);
-      expect(updatedMenu.matchedCount).toEqual(1);
-    });
-  
-    test("Deletes menu", async () => {
-      const menus = db.collection("menu");
-  
-      const deletedMenu = await menus.deleteOne({ _id: docId }, true);
-      expect(deletedMenu.acknowledged).toEqual(true);
-    });
+    db = await connection.db("cse341_restaurant_app");
   });
+
+  afterAll(async () => {
+    await connection.close();
+  });
+
+  test("responds to /menus", async () => {
+    const res = await request.get("/menus");
+    expect(res.header["content-type"]).toBe("application/json; charset=utf-8");
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("Creates a new menu", async () => {
+    const menus = db.collection("menu");
+
+    mockMenu = {
+      name: "Menu Name",
+      description: "Menu description",
+      price: 1234,
+      category: "Vegan",
+      availability: 1,
+    };
+
+    const createdMenu = await menus.insertOne(mockMenu);
+    docId = createdMenu.insertedId;
+  });
+
+  test("Finds menu", async () => {
+    const menus = db.collection("menu");
+    //console.log(createdMenu.insertedId);
+
+    const insertedMenu = await menus.findOne({ _id: docId });
+    expect(insertedMenu).toEqual(mockMenu);
+  });
+
+  test("Updates menu", async () => {
+    const updateMenu = {
+      name: "Menu Name 2",
+      description: "Menu description 2",
+      price: 12345,
+      category: "Vegan 2",
+      availability: 0,
+    };
+    const menus = db.collection("menu");
+    //console.log(createdMenu.insertedId);
+
+    const updatedMenu = await menus.replaceOne({ _id: docId }, updateMenu);
+    expect(updatedMenu.acknowledged).toEqual(true);
+    expect(updatedMenu.matchedCount).toEqual(1);
+  });
+
+  test("Deletes menu", async () => {
+    const menus = db.collection("menu");
+
+    const deletedMenu = await menus.deleteOne({ _id: docId }, true);
+    expect(deletedMenu.acknowledged).toEqual(true);
+  });
+});
