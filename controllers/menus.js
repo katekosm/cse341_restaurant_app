@@ -39,10 +39,7 @@ const createMenu = async (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+    availability: req.body.availability
   };
   const response = await mongodb
     .getDb()
@@ -68,10 +65,7 @@ const updateMenu = async (req, res) => {
     description: req.body.description,
     price: req.body.price,
     category: req.body.category,
-    manufacturer: req.body.manufacturer,
-    inStock: req.body.inStock,
-    brand: req.body.brand,
-    color: req.body.color,
+    availability: req.body.availability
   };
   const response = await mongodb
     .getDb()

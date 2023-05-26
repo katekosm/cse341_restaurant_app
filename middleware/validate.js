@@ -6,10 +6,7 @@ const saveMenu = async (req, res, next) => {
     description: "required|string",
     price: "required|numeric",
     category: "required|string",
-    manufacturer: "required|string",
-    inStock: "required|boolean",
-    brand: "required|string",
-    color: "required|string",
+    availability: "required|boolean",
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
