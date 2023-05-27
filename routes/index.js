@@ -16,8 +16,9 @@ router.use('/customers', require('./customers'));
 router.use('/my-account', require('./my-account'));
 
 // Passport login and logout
-router.get('/login', passport.authenticate('google', { scope:
-  [ 'email', 'profile' ] }), (req, res) => {}
+router.get('/login', 
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] }), 
+  //(req, res) => {}
 /* 
 #swagger.tags = ['Login, Logout Process']
 #swagger.summary = 'Logs Customers Into their Acounts'

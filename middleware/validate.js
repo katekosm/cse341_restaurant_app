@@ -74,7 +74,7 @@ const saveCustomer = async (req, res, next) => {
   const validationRule = {
     userName: "required|string",
     googleId: "required|string",
-    email: "required|string"
+    email: "required|email"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
@@ -93,7 +93,7 @@ const saveCustomer = async (req, res, next) => {
 const updateCustomer = async (req, res, next) => {
   const validationRule = {
     userName: "required|string",
-    email: "required|string"
+    email: "required|email"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
