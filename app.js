@@ -44,12 +44,13 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
+// NOTE: Apparently, this is not used
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
 
 app.get("/logged-status", (req, res) => {
   res.send(

@@ -1,3 +1,4 @@
+const passport = require("passport");
 const validator = require("../helpers/validate");
 
 const saveMenu = async (req, res, next) => {
@@ -54,7 +55,8 @@ const saveUser = async (req, res, next) => {
     email: "required|email",
     yearsOfWorking: "required|numeric",
     gender: "required|numeric",
-    userType: "required|numeric"
+    userType: ['regex:/^[1-3]{1}$/'],
+    password: "required|string"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
@@ -74,7 +76,7 @@ const saveCustomer = async (req, res, next) => {
   const validationRule = {
     userName: "required|string",
     googleId: "required|string",
-    email: "required|string"
+    email: "required|email"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {
@@ -93,7 +95,7 @@ const saveCustomer = async (req, res, next) => {
 const updateCustomer = async (req, res, next) => {
   const validationRule = {
     userName: "required|string",
-    email: "required|string"
+    email: "required|email"
   };
 
   validator(req.body, validationRule, {}, (err, status) => {

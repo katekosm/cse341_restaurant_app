@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const passport = require('passport');
+const { isLoggedIn } = require('../middleware/loggedIn');
 
 router.get("/", (req, res) => {
   // #swagger.ignore = true
@@ -16,8 +17,10 @@ router.use('/customers', require('./customers'));
 router.use('/my-account', require('./my-account'));
 
 // Passport login and logout
-router.get('/login', passport.authenticate('google', { scope:
-  [ 'email', 'profile' ] }), (req, res) => {}
+router.get('/login',
+  isLoggedIn,
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] }), 
+  //(req, res) => {}
 /* 
 #swagger.tags = ['Login, Logout Process']
 #swagger.summary = 'Logs Customers Into their Acounts'
@@ -31,7 +34,7 @@ router.get('/logout', function(req, res, next) {
 }
 /* 
 #swagger.tags = ['Login, Logout Process']
-#swagger.summary = 'Logs Customers Out of their Acounts'
+#swagger.summary = 'Logs Customers or Users Out of their Acounts'
 */
 );
 
