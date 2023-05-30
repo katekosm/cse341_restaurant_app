@@ -3,6 +3,8 @@ const router = express.Router();
 
 const menusController = require('../controllers/menus');
 const validation = require('../middleware/validate');
+const { isAuthenticated } = require("../middleware/authenticate");
+const { isAuthorized } = require("../middleware/authorize");
 
 router.get('/', menusController.getAll
 /* 
@@ -18,21 +20,21 @@ router.get('/:id', menusController.getSingle
 */
 );
 
-router.post('/', validation.saveMenu, menusController.createMenu
+router.post('/', isAuthenticated, isAuthorized(2), validation.saveMenu, menusController.createMenu
 /* 
 #swagger.tags = ['Menus']
 #swagger.summary = 'Creates a new menu'
 */
 );
 
-router.put('/:id', validation.saveMenu, menusController.updateMenu
+router.put('/:id', isAuthenticated, isAuthorized(2), validation.saveMenu, menusController.updateMenu
 /* 
 #swagger.tags = ['Menus']
 #swagger.summary = 'Updates one menu'
 */
 );
 
-router.delete('/:id', menusController.deleteMenu
+router.delete('/:id', isAuthenticated, isAuthorized(2), menusController.deleteMenu
 /* 
 #swagger.tags = ['Menus']
 #swagger.summary = 'Deletes one menu'
