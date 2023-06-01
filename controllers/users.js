@@ -139,7 +139,7 @@ const loginUser = async (req, res, next) => {
     (async () => {
       try {
         if( await bcrypt.compare(req.body.password, lists[0].password) ) {
-          const userType = lists[0].userType;
+          const userType = parseInt(lists[0].userType);
           const userName = lists[0].name;
 
           const userSession = { userType: userType, displayName: userName }; 
